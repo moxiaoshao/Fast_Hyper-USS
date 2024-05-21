@@ -1,0 +1,1 @@
+/usr/bin/c++  -O2 -mavx2   CMakeFiles/CPU.dir/main.cpp.o  -o CPU 
