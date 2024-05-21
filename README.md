@@ -1,5 +1,5 @@
 # Fast_Hyper-USS
 Speed Optimization for Hyper-USS
 
-## [https://github.com](CPU2.0)
+## [CPU2.0](https://github.com/moxiaoshao/Fast_Hyper-USS/blob/master/CPU2.0)
 ## Redis
