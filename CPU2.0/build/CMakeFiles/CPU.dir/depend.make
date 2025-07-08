@@ -16,6 +16,7 @@ CMakeFiles/CPU.dir/main.cpp.o: ../Struct/CuckooMap.h
 CMakeFiles/CPU.dir/main.cpp.o: ../Struct/StreamSummary.h
 CMakeFiles/CPU.dir/main.cpp.o: ../BenchMark.h
 CMakeFiles/CPU.dir/main.cpp.o: ../BenchMark_HeavyChange.h
+CMakeFiles/CPU.dir/main.cpp.o: ../BenchMark_SNMP.h
 CMakeFiles/CPU.dir/main.cpp.o: ../BenchMark_Synthetic.h
 CMakeFiles/CPU.dir/main.cpp.o: ../BenchMark_test_dnum.h
 CMakeFiles/CPU.dir/main.cpp.o: ../main.cpp

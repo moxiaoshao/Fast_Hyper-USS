@@ -1,4 +1,4 @@
-# Install script for directory: /root/shizhouran/HyperUSS-master/CPU
+# Install script for directory: /mnt/d/科研项目/FastHyperUSS/Fast_Hyper-USS/CPU2.0
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/root/shizhouran/HyperUSS-master/CPU/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/d/科研项目/FastHyperUSS/Fast_Hyper-USS/CPU2.0/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,5 +6,5 @@ CXX_FLAGS = -O2 -mavx2   -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/root/shizhouran/HyperUSS-master/CPU/. -I/root/shizhouran/HyperUSS-master/CPU/Common -I/root/shizhouran/HyperUSS-master/CPU/Multiple -I/root/shizhouran/HyperUSS-master/CPU/Struct 
+CXX_INCLUDES = -I/mnt/d/科研项目/FastHyperUSS/Fast_Hyper-USS/CPU2.0/. -I/mnt/d/科研项目/FastHyperUSS/Fast_Hyper-USS/CPU2.0/Common -I/mnt/d/科研项目/FastHyperUSS/Fast_Hyper-USS/CPU2.0/Multiple -I/mnt/d/科研项目/FastHyperUSS/Fast_Hyper-USS/CPU2.0/Struct 
 

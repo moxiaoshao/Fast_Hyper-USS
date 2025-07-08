@@ -23,11 +23,11 @@
 // #define FAIRNESS
 
 // number of keys
-#define TUPLES_NUM 4
+#define TUPLES_NUM 11
 
 // number of values
 // Notice: ifdef AVERAGE: TUPLES_VALUES_ELEMENT_NUM needs + 1
-#define TUPLES_VALUES_ELEMENT_NUM 5
+#define TUPLES_VALUES_ELEMENT_NUM 1
 
 // number of subset test
 #define SUBSETS_NUM 1000
@@ -51,6 +51,91 @@ struct TUPLES_ID {
 
   bool operator<(const TUPLES_ID &a) const {
     return memcmp(key, a.key, sizeof(key)) < 0;
+  }
+};
+
+struct TUPLES_ID_QUERY : TUPLES_ID {
+  uint32_t key_range_max[TUPLES_NUM];
+  // key = key_range_left
+
+  TUPLES_ID_QUERY() {
+    memset(key_range_max, 0, sizeof(uint32_t) * TUPLES_NUM);
+  }
+
+  TUPLES_ID_QUERY(const TUPLES_ID &id) {
+    memcpy(key, id.key, sizeof(uint32_t) * TUPLES_NUM);
+    memset(key_range_max, 0, sizeof(uint32_t) * TUPLES_NUM);
+  }
+
+  // copy constructor
+  TUPLES_ID_QUERY(const TUPLES_ID_QUERY &id_query) {
+    memcpy(key, id_query.key, sizeof(uint32_t) * TUPLES_NUM);
+    memcpy(key_range_max, id_query.key_range_max,
+           sizeof(uint32_t) * TUPLES_NUM);
+  }
+
+  // check if ID_QUERY includes a given ID
+  bool includes(const TUPLES_ID &id) const {
+    for (int i = 0; i < TUPLES_NUM; ++i) {
+      // if range is not set, no need to check
+      if (key_range_max[i] == 0) continue;
+      if (id.key[i] < key[i] || id.key[i] >= key_range_max[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // update min-max range using a given ID
+  void update_range(const TUPLES_ID &id) {
+    for (int i = 0; i < TUPLES_NUM; ++i) {
+      if (key_range_max[i] == 0) {
+        key[i] = id.key[i];
+        key_range_max[i] = id.key[i] + 1;
+      } else {
+        if (id.key[i] < key[i]) {
+          key[i] = id.key[i];
+        }
+        if (id.key[i] >= key_range_max[i]) {
+          key_range_max[i] = id.key[i] + 1;
+        }
+      }
+    }
+  }
+
+  // sample a random range for the ID_QUERY, given controllable variables number
+  void sample_range(int num_vars) {
+    // sample a permutation of [0, TUPLES_NUM) and select first num_vars elements
+    std::vector<int> perm(TUPLES_NUM);
+    std::iota(perm.begin(), perm.end(), 0);
+    std::shuffle(perm.begin(), perm.end(), std::mt19937{rd()});
+    for (int i = 0; i < num_vars; ++i) {
+      // sample a random range in [key[idx], key_range_max[idx]) for this dimension
+      int idx = perm[i];
+      int range = key_range_max[idx] - key[idx];
+      if (range > 0) {
+        // sample a random value in [0, range)
+        int l = rand() % range, r = rand() % range;
+        if (l > r) std::swap(l, r);
+        l += key[idx];
+        r += key[idx];
+        key[idx] = l;
+        key_range_max[idx] = r + 1;  // make it exclusive
+      } else {
+        continue;  // unlimited range, no need to sample
+      }
+    }
+  }
+
+  std::string to_string() const {
+    std::stringstream ss;
+    for (int i = 0; i < TUPLES_NUM; ++i) {
+      ss << key[i] << "-" << key_range_max[i];
+      if (i < TUPLES_NUM - 1) {
+        ss << ",";
+      }
+    }
+    return ss.str();
   }
 };
 
